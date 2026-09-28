@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data-Driven SEO &amp; Marketing Investment Decision-Support Tool</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#0f1b3d;--mut:#5b6785;--line:#e3e7f0;--pri:#3b47d9;--pri-l:#eceefd;--g:#12805c;--gl:#e4f5ee;--a:#b7710f;--al:#fdf1dc;--r:#c0392b;--rl:#fbe8e5;--sh:0 1px 2px rgba(15,27,61,.05),0 4px 14px rgba(15,27,61,.04)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top-in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:14px;flex-wrap:wrap}
+h1{font-size:1.25rem;margin:0;letter-spacing:-.01em}
+.sub{margin:2px 0 0;color:var(--mut);font-size:.88rem}
+.top-r{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{background:var(--al);color:var(--a);border:1px solid #f1d9aa;border-radius:99px;padding:3px 11px;font-size:.78rem;font-weight:600}
+.btn{background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 13px;font:inherit;font-size:.85rem;color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--pri);color:var(--pri)}
+.nav{display:flex;gap:4px;overflow-x:auto;padding-top:6px}
+.nav a{padding:8px 12px;color:var(--mut);text-decoration:none;font-size:.88rem;border-bottom:2px solid transparent;white-space:nowrap}
+.nav a:hover{color:var(--pri);border-color:var(--pri)}
+main{padding-top:20px}
+section{scroll-margin-top:110px;margin-bottom:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh);padding:20px}
+.ch{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;margin-bottom:14px}
+h2{font-size:1.05rem;margin:0}
+.ch p{margin:0;color:var(--mut);font-size:.85rem;flex-basis:100%}
+.ch select{margin-left:auto}
+h3{font-size:.92rem;margin:0 0 2px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+.grid2 .card{margin:0}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+.kpis.small{margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--sh)}
+.kpi span{display:block;color:var(--mut);font-size:.8rem}
+.kpi b{display:block;font-size:1.55rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+.kpi small{font-size:.78rem;font-weight:600}
+.kpis.small .kpi{padding:10px 12px;box-shadow:none}
+.kpis.small .kpi b{font-size:1.2rem}
+.g{color:var(--g)}.a{color:var(--a)}.r{color:var(--r)}.m{color:var(--mut)}
+.scroll{overflow-x:auto}
+.dt{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:.88rem}
+.dt th{text-align:right;color:var(--mut);font-weight:600;font-size:.78rem;padding:8px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.dt td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.dt th:first-child,.dt td:first-child{text-align:left}
+.dt tr:last-child td{border-bottom:0}
+.dt .tot td{font-weight:700;background:#f8f9fd}
+.dt input{width:92px;text-align:right;border:1px solid var(--line);border-radius:6px;padding:5px 7px;font:inherit;color:var(--ink);background:#fbfcfe}
+.dt input:focus,select:focus,.btn:focus-visible,.tab:focus-visible{outline:2px solid var(--pri);outline-offset:1px;border-color:var(--pri)}
+.dt .best{background:var(--gl);color:var(--g);font-weight:700}
+.dt small{display:block;font-size:.72rem;font-weight:600}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
+.chip{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.76rem;font-weight:700}
+.chip.g{background:var(--gl)}.chip.a{background:var(--al)}.chip.r{background:var(--rl)}
+select{font:inherit;font-size:.88rem;border:1px solid var(--line);border-radius:8px;padding:6px 9px;background:#fff;color:var(--ink)}
+.hb{display:grid;grid-template-columns:96px 1fr 76px;gap:10px;align-items:center;margin:11px 0;font-size:.88rem}
+.hb b{text-align:right;font-variant-numeric:tabular-nums}
+.ht{position:relative;height:16px;background:#eef1f8;border-radius:5px}
+.hf{height:100%;border-radius:5px;transition:width .25s}
+.hr{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.55}
+.note{color:var(--mut);font-size:.82rem;margin:12px 0 0}
+.sc{padding:11px 0;border-bottom:1px solid var(--line)}
+.sc:last-child{border:0}
+.sc-h{display:flex;align-items:center;gap:10px}
+.sc-h strong{flex:1}
+.sc-n{font-size:1.3rem;font-weight:700;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+.sc .ht{height:8px;margin:7px 0 4px}
+.sc p{margin:0;color:var(--mut);font-size:.8rem}
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 14px;font:inherit;font-size:.88rem;cursor:pointer;color:var(--mut)}
+.tab[aria-selected=true]{background:var(--pri);border-color:var(--pri);color:#fff}
+.simgrid{display:grid;grid-template-columns:340px 1fr;gap:24px}
+.lbl{display:block;font-size:.88rem;color:var(--mut);margin-bottom:6px}
+.lbl b{color:var(--ink)}
+input[type=range]{width:100%;accent-color:var(--pri)}
+.sl{margin:14px 0}
+.sl-h{display:flex;justify-content:space-between;font-size:.88rem;margin-bottom:2px}
+.stack{display:flex;height:16px;border-radius:5px;overflow:hidden;margin-top:6px}
+.stack i{display:block;transition:width .2s}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px 24px}
+.mgrid p{margin:0;color:var(--mut);font-size:.85rem}
+.insight{margin:14px 0 0;padding:12px 14px;background:var(--pri-l);border-radius:8px;font-size:.9rem}
+.mixrow{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;margin-top:10px;font-size:.85rem}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;font-size:.8rem;color:var(--mut)}
+.foot{color:var(--mut);font-size:.8rem;padding-bottom:30px}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.simgrid{grid-template-columns:1fr}.kpis .kpi:last-child{grid-column:span 2}}
+@media(max-width:520px){.hb{grid-template-columns:78px 1fr 64px}.mixrow{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <div>
+      <h1>SEO &amp; Marketing Investment Decision-Support Tool</h1>
+      <p class="sub">Explore channel performance and simulate budget allocations.</p>
+    </div>
+    <div class="top-r">
+      <span class="pill">Synthetic demo data · modelled estimates</span>
+      <button id="reset" class="btn">Reset demo data</button>
+    </div>
+  </div>
+  <nav class="wrap nav"><a href="#data">Data</a><a href="#channels">Channels</a><a href="#sim">Simulator</a><a href="#scen">Scenarios</a><a href="#method">Methodology</a></nav>
+</header>
+
+<main class="wrap">
+  <section id="kpis" class="kpis" aria-label="Portfolio summary"></section>
+
+  <section id="data" class="card">
+    <div class="ch"><h2>Channel data</h2><p>Edit any value (monthly figures). Everything below recalculates instantly.</p></div>
+    <div class="scroll"><table id="dtable" class="dt"></table></div>
+  </section>
+
+  <section id="channels" class="grid2">
+    <div class="card">
+      <div class="ch"><h2>Channel comparison</h2>
+        <select id="metric" aria-label="Metric"></select></div>
+      <div id="cmpChart"></div>
+      <p id="cmpNote" class="note"></p>
+    </div>
+    <div class="card">
+      <div class="ch"><h2>Opportunity scores</h2><p>0–100 composite of efficiency, conversion, engagement and headroom.</p></div>
+      <div id="scores"></div>
+    </div>
+  </section>
+
+  <section id="sim" class="card">
+    <div class="ch"><h2>Budget allocation simulator</h2><p>Choose a scenario, set the monthly budget, and drag the sliders. Other channels rebalance to keep the total at 100%.</p></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="simgrid">
+      <div class="ctrl">
+        <label class="lbl" for="budget">Monthly budget: <b id="budgetVal"></b></label>
+        <input type="range" id="budget" min="50000" max="400000" step="1000">
+        <div id="sliders"></div>
+        <div id="mix" class="stack"></div>
+      </div>
+      <div>
+        <div id="simKpis" class="kpis small"></div>
+        <div class="scroll"><table id="simTable" class="dt"></table></div>
+      </div>
+    </div>
+    <p class="note">Projections use diminishing returns: doubling spend in a channel does not double its customers (see Methodology).</p>
+  </section>
+
+  <section id="scen" class="card">
+    <div class="ch"><h2>Scenario comparison</h2><p>Deltas are relative to Scenario A. Best value in each row is highlighted.</p></div>
+    <div class="scroll"><table id="scTable" class="dt"></table></div>
+    <div id="scMix"></div>
+    <p id="scInsight" class="insight"></p>
+  </section>
+
+  <section id="method" class="card">
+    <div class="ch"><h2>How the metrics are calculated</h2></div>
+    <div class="mgrid">
+      <div><h3>CTR</h3><p>Clicks ÷ Impressions.</p></div>
+      <div><h3>Customers</h3><p>Clicks × Conversion rate.</p></div>
+      <div><h3>CAC</h3><p>Spend ÷ Customers. Lower is better.</p></div>
+      <div><h3>LTV : CAC</h3><p>Customer lifetime value ÷ CAC. Above 3 is commonly treated as healthy; below 1 loses money per customer.</p></div>
+      <div><h3>Modelled value</h3><p>Customers × LTV. An estimate of lifetime value, not booked revenue.</p></div>
+      <div><h3>ROI</h3><p>(Modelled value − Spend) ÷ Spend.</p></div>
+      <div><h3>Opportunity score</h3><p>40% LTV:CAC (capped at 5×) + 20% conversion (capped at 5%) + 15% CTR (capped at 8%) + 25% headroom (share of search volume / audience not yet captured).</p></div>
+      <div><h3>Projection</h3><p>Customers = current customers × (new spend ÷ current spend)^elasticity. Elasticity below 1 means diminishing returns; it is editable per channel.</p></div>
+    </div>
+    <p class="note">All figures are synthetic and modelled. They are not real campaign results and are not guaranteed outcomes.</p>
+  </section>
+</main>
+<footer class="wrap foot">Demo data is fictional. Results are simulated estimates for decision support, not forecasts.</footer>
+<script>
+"use strict";
+/* Synthetic demo data. All results are modelled estimates. */
+const COLORS = ["#3b47d9", "#0e9ac4", "#8b5cf6", "#64748b"];
+const FIELDS = [["sv", "Search vol. / audience"], ["imp", "Impressions"], ["clk", "Clicks (traffic)"],
+  ["sp", "Spend ($)"], ["cv", "Conv. rate (%)"], ["ltv", "LTV ($)"], ["el", "Elasticity"]];
+
+function defaults() {
+  const channels = [
+    { n: "SEO", sv: 120000, imp: 380000, clk: 19000, sp: 45000, cv: 3.2, ltv: 420, el: 0.75 },
+    { n: "Paid Search", sv: 90000, imp: 520000, clk: 26000, sp: 60000, cv: 2.4, ltv: 380, el: 0.85 },
+    { n: "Social Media", sv: 200000, imp: 900000, clk: 21000, sp: 30000, cv: 1.1, ltv: 300, el: 0.6 },
+    { n: "Email", sv: 60000, imp: 150000, clk: 9000, sp: 14000, cv: 3.8, ltv: 360, el: 0.45 }];
+  const tot = channels.reduce((a, c) => a + c.sp, 0);
+  const base = channels.map(c => c.sp / tot * 100);
+  return {
+    channels, active: 0,
+    scen: [{ n: "A · Baseline", b: tot, a: base }, { n: "B · Paid-heavy", b: tot, a: [20, 55, 20, 5] },
+      { n: "C · SEO & Email focus", b: tot, a: [45, 25, 10, 20] }]
+  };
+}
+let S = defaults();
+
+const $ = s => document.querySelector(s);
+const n0 = v => isFinite(v) ? Math.round(v).toLocaleString("en-US") : "—";
+const usd = v => !isFinite(v) ? "—" : Math.abs(v) >= 1e6 ? "$" + (v / 1e6).toFixed(2) + "M" :
+  Math.abs(v) >= 1e4 ? "$" + (v / 1e3).toFixed(1) + "K" : "$" + Math.round(v).toLocaleString("en-US");
+const x1 = v => isFinite(v) ? v.toFixed(1) + "×" : "—";
+const pc = (v, d = 1) => isFinite(v) ? v.toFixed(d) + "%" : "—";
+const tone = r => r >= 3 ? "g" : r >= 1 ? "a" : "r";
+const sTone = s => s >= 60 ? "g" : s >= 40 ? "a" : "r";
+const tag = t => ({ g: "Scale", a: "Optimise", r: "Review" }[t]);
+
+/* ---------- Model ---------- */
+function derive(c) {
+  const cu = c.clk * c.cv / 100, cac = cu ? c.sp / cu : Infinity;
+  const r = cu && c.sp ? c.ltv / cac : 0, ctr = c.imp ? c.clk / c.imp * 100 : 0;
+  const cap = c.sv ? Math.min(c.clk / c.sv, 1) : 1;
+  const score = Math.round(Math.min(r / 5, 1) * 40 + Math.min(c.cv / 5, 1) * 20 + Math.min(ctr / 8, 1) * 15 + (1 - cap) * 25);
+  return { cu, cac, r, ctr, cap, score, val: cu * c.ltv, roi: c.sp ? (cu * c.ltv - c.sp) / c.sp * 100 : 0 };
+}
+function project(s) {
+  const rows = S.channels.map((c, i) => {
+    const sp = s.b * s.a[i] / 100, k = c.sp ? sp / c.sp : 0, f = Math.pow(k, c.el), cu = derive(c).cu * f;
+    return { sp, clk: c.clk * f, cu, val: cu * c.ltv, cac: cu ? sp / cu : Infinity };
+  });
+  const T = rows.reduce((t, r) => ({ sp: t.sp + r.sp, clk: t.clk + r.clk, cu: t.cu + r.cu, val: t.val + r.val }), { sp: 0, clk: 0, cu: 0, val: 0 });
+  T.cac = T.cu ? T.sp / T.cu : Infinity; T.cv = T.clk ? T.cu / T.clk * 100 : 0;
+  T.roi = T.sp ? (T.val - T.sp) / T.sp * 100 : 0; T.r = T.cu && T.sp ? (T.val / T.cu) / T.cac : 0;
+  return { rows, T };
+}
+function delta(v, b, lowerBetter) {
+  if (!isFinite(v) || !isFinite(b) || !b) return "";
+  const d = (v - b) / Math.abs(b) * 100; if (Math.abs(d) < 0.05) return '<small class="m">±0%</small>';
+  const good = lowerBetter ? d < 0 : d > 0;
+  return `<small class="${good ? "g" : "r"}">${d > 0 ? "+" : ""}${d.toFixed(1)}%</small>`;
+}
+
+/* ---------- Data table (built once) ---------- */
+function buildTable() {
+  const head = "<tr><th>Channel</th>" + FIELDS.map(f => `<th>${f[1]}</th>`).join("") +
+    "<th>CTR</th><th>Customers</th><th>CAC</th><th>LTV:CAC</th><th>ROI</th><th>Score</th></tr>";
+  const rows = S.channels.map((c, i) => `<tr><td><span class="dot" style="background:${COLORS[i]}"></span>${c.n}</td>` +
+    FIELDS.map(f => `<td><input type="number" min="0" step="any" data-i="${i}" data-f="${f[0]}" value="${c[f[0]]}" aria-label="${c.n} ${f[1]}"></td>`).join("") +
+    `<td data-d="ctr${i}"></td><td data-d="cu${i}"></td><td data-d="cac${i}"></td><td data-d="r${i}"></td><td data-d="roi${i}"></td><td data-d="sc${i}"></td></tr>`).join("");
+  $("#dtable").innerHTML = head + rows;
+}
+$("#dtable").addEventListener("input", e => {
+  const t = e.target; if (!t.dataset.f) return;
+  const v = parseFloat(t.value); S.channels[+t.dataset.i][t.dataset.f] = isFinite(v) && v >= 0 ? v : 0; update();
+});
+
+/* ---------- Charts ---------- */
+function hbar(el, items, fmt, ref) {
+  const max = Math.max(...items.map(i => i.v).filter(isFinite), ref || 0, 1e-9);
+  el.innerHTML = items.map(i => `<div class="hb"><span>${i.l}</span><div class="ht"><div class="hf" style="width:${isFinite(i.v) ? Math.max(i.v, 0) / max * 100 : 0}%;background:${i.c}"></div>${ref != null ? `<i class="hr" style="left:${ref / max * 100}%" title="Benchmark"></i>` : ""}</div><b>${fmt(i.v)}</b></div>`).join("");
+}
+const METRICS = {
+  score: ["Opportunity score", d => d.score, n0, null, "Composite 0–100 score."],
+  r: ["LTV : CAC", d => d.r, x1, 3, "Vertical marker = common 3× benchmark."],
+  cac: ["CAC", d => d.cac, usd, null, "Lower is better."],
+  cu: ["Customers", d => d.cu, n0, null, "Clicks × conversion rate."],
+  roi: ["ROI", d => d.roi, v => pc(v, 0), null, "(Modelled value − spend) ÷ spend."],
+  ctr: ["CTR", d => d.ctr, v => pc(v, 2), null, "Clicks ÷ impressions."]
+};
+$("#metric").innerHTML = Object.entries(METRICS).map(([k, m]) => `<option value="${k}">${m[0]}</option>`).join("");
+$("#metric").addEventListener("change", update);
+
+/* ---------- Simulator controls ---------- */
+function buildSim() {
+  $("#tabs").innerHTML = S.scen.map((s, i) => `<button class="tab" role="tab" data-t="${i}" aria-selected="${i === S.active}">${s.n}</button>`).join("");
+  $("#sliders").innerHTML = S.channels.map((c, i) => `<div class="sl"><div class="sl-h"><span><span class="dot" style="background:${COLORS[i]}"></span>${c.n}</span><b data-p="${i}"></b></div><input type="range" min="0" max="100" step="1" data-s="${i}" aria-label="${c.n} allocation"></div>`).join("") +
+    `<div class="legend">Allocation always sums to 100%.</div>`;
+  syncSim();
+}
+function syncSim() {
+  const s = S.scen[S.active];
+  $("#budget").value = s.b; $("#budgetVal").textContent = usd(s.b);
+  document.querySelectorAll("[data-s]").forEach(el => {
+    const i = +el.dataset.s; el.value = s.a[i];
+    document.querySelector(`[data-p="${i}"]`).textContent = `${s.a[i].toFixed(0)}% · ${usd(s.b * s.a[i] / 100)}`;
+  });
+  $("#mix").innerHTML = s.a.map((p, i) => `<i style="width:${p}%;background:${COLORS[i]}"></i>`).join("");
+}
+$("#tabs").addEventListener("click", e => { const t = e.target.closest("[data-t]"); if (t) { S.active = +t.dataset.t; buildSim(); update(); } });
+$("#budget").addEventListener("input", e => { S.scen[S.active].b = +e.target.value; syncSim(); update(); });
+$("#sliders").addEventListener("input", e => {
+  if (e.target.dataset.s === undefined) return;
+  const s = S.scen[S.active], i = +e.target.dataset.s, v = +e.target.value, rest = 100 - v;
+  const others = s.a.reduce((t, x, j) => j === i ? t : t + x, 0);
+  s.a = s.a.map((x, j) => j === i ? v : others > 0 ? x * rest / others : rest / (s.a.length - 1));
+  syncSim(); update();
+});
+
+/* ---------- Render ---------- */
+function update() {
+  const D = S.channels.map(derive), C = S.channels;
+  D.forEach((d, i) => {
+    const set = (k, h) => { const el = document.querySelector(`[data-d="${k}${i}"]`); if (el) el.innerHTML = h; };
+    set("ctr", pc(d.ctr, 2)); set("cu", n0(d.cu)); set("cac", usd(d.cac));
+    set("r", `<span class="${tone(d.r)}"><b>${x1(d.r)}</b></span>`);
+    set("roi", `<span class="${d.roi >= 0 ? "g" : "r"}">${pc(d.roi, 0)}</span>`);
+    set("sc", `<span class="chip ${sTone(d.score)}">${d.score}</span>`);
+  });
+  /* KPIs */
+  const sp = C.reduce((t, c) => t + c.sp, 0), cu = D.reduce((t, d) => t + d.cu, 0), val = D.reduce((t, d) => t + d.val, 0);
+  const cac = cu ? sp / cu : Infinity, r = cu && sp ? (val / cu) / cac : 0;
+  const k = (l, v, cls = "") => `<div class="kpi"><span>${l}</span><b class="${cls}">${v}</b></div>`;
+  $("#kpis").innerHTML = k("Monthly spend", usd(sp)) + k("Customers (est.)", n0(cu)) + k("Blended CAC", usd(cac)) +
+    k("Blended LTV : CAC", x1(r), tone(r)) + k("Modelled lifetime value", usd(val));
+  /* Comparison chart */
+  const m = METRICS[$("#metric").value];
+  hbar($("#cmpChart"), C.map((c, i) => ({ l: c.n, v: m[1](D[i]), c: $("#metric").value === "r" ? { g: "#12805c", a: "#d98a1c", r: "#c0392b" }[tone(D[i].r)] : COLORS[i] })), m[2], m[3]);
+  $("#cmpNote").textContent = m[4];
+  /* Scores */
+  $("#scores").innerHTML = C.map((c, i) => {
+    const d = D[i], t = sTone(d.score), why = d.r >= 3 ? "Efficient acquisition" : d.r >= 1 ? "Marginal unit economics" : "Costs exceed customer value";
+    const hr = d.cap < 0.25 ? "large untapped demand" : d.cap < 0.6 ? "some headroom" : "near saturation";
+    return `<div class="sc"><div class="sc-h"><strong>${c.n}</strong><span class="chip ${t}">${tag(t)}</span><span class="sc-n ${t}">${d.score}</span></div><div class="ht"><div class="hf" style="width:${d.score}%;background:${{ g: "#12805c", a: "#d98a1c", r: "#c0392b" }[t]}"></div></div><p>${why}; ${hr} (${pc(d.cap * 100, 0)} of demand captured).</p></div>`;
+  }).join("");
+  renderSim(); renderScen();
+}
+function renderSim() {
+  const s = S.scen[S.active], P = project(s), B = project(S.scen[0]), T = P.T, cmp = S.active !== 0;
+  const k = (l, v, d, cls = "") => `<div class="kpi"><span>${l}</span><b class="${cls}">${v}</b>${cmp ? d : ""}</div>`;
+  $("#simKpis").innerHTML = k("Customers", n0(T.cu), delta(T.cu, B.T.cu)) + k("CAC", usd(T.cac), delta(T.cac, B.T.cac, true)) +
+    k("Conv. rate", pc(T.cv, 2), delta(T.cv, B.T.cv)) + k("Modelled value", usd(T.val), delta(T.val, B.T.val)) + k("LTV : CAC", x1(T.r), delta(T.r, B.T.r), tone(T.r));
+  $("#simKpis").style.gridTemplateColumns = "repeat(auto-fit,minmax(120px,1fr))";
+  $("#simTable").innerHTML = "<tr><th>Channel</th><th>Spend</th><th>Traffic</th><th>Customers</th><th>CAC</th><th>LTV:CAC</th><th>Modelled value</th></tr>" +
+    P.rows.map((r, i) => { const ra = r.cu && r.sp ? S.channels[i].ltv / r.cac : 0; return `<tr><td><span class="dot" style="background:${COLORS[i]}"></span>${S.channels[i].n}</td><td>${usd(r.sp)}</td><td>${n0(r.clk)}</td><td>${n0(r.cu)}</td><td>${usd(r.cac)}</td><td class="${tone(ra)}">${x1(ra)}</td><td>${usd(r.val)}</td></tr>`; }).join("") +
+    `<tr class="tot"><td>Total</td><td>${usd(T.sp)}</td><td>${n0(T.clk)}</td><td>${n0(T.cu)}</td><td>${usd(T.cac)}</td><td class="${tone(T.r)}">${x1(T.r)}</td><td>${usd(T.val)}</td></tr>`;
+}
+function renderScen() {
+  const Ps = S.scen.map(project);
+  const rows = [["Budget", t => t.sp, usd, 0], ["Projected traffic", t => t.clk, n0, 1], ["Customers", t => t.cu, n0, 1],
+    ["Blended conv. rate", t => t.cv, v => pc(v, 2), 1], ["Blended CAC", t => t.cac, usd, -1], ["Modelled value", t => t.val, usd, 1],
+    ["ROI", t => t.roi, v => pc(v, 0), 1], ["LTV : CAC", t => t.r, x1, 1]];
+  $("#scTable").innerHTML = "<tr><th>Metric</th>" + S.scen.map(s => `<th>${s.n}</th>`).join("") + "</tr>" + rows.map(([l, f, fm, dir]) => {
+    const vals = Ps.map(p => f(p.T)), best = dir === 0 ? null : dir > 0 ? Math.max(...vals) : Math.min(...vals.filter(isFinite));
+    return `<tr><td>${l}</td>` + vals.map((v, i) => `<td class="${dir && v === best ? "best" : ""}">${fm(v)}${i && dir ? delta(v, vals[0], dir < 0) : ""}</td>`).join("") + "</tr>";
+  }).join("");
+  $("#scMix").innerHTML = S.scen.map(s => `<div class="mixrow"><span>${s.n}</span><div class="stack">${s.a.map((p, i) => `<i style="width:${p}%;background:${COLORS[i]}" title="${S.channels[i].n} ${p.toFixed(0)}%"></i>`).join("")}</div></div>`).join("") +
+    `<div class="legend">${S.channels.map((c, i) => `<span><span class="dot" style="background:${COLORS[i]}"></span>${c.n}</span>`).join("")}</div>`;
+  const bi = Ps.reduce((b, p, i) => p.T.val > Ps[b].T.val ? i : b, 0), ci = Ps.reduce((b, p, i) => p.T.cac < Ps[b].T.cac ? i : b, 0);
+  $("#scInsight").textContent = `Under the model's assumptions, ${S.scen[bi].n} gives the highest modelled value (${usd(Ps[bi].T.val)}) and ${S.scen[ci].n} the lowest blended CAC (${usd(Ps[ci].T.cac)}). These are simulated estimates, not guaranteed outcomes.`;
+}
+
+$("#reset").addEventListener("click", () => { S = defaults(); buildTable(); buildSim(); update(); });
+buildTable(); buildSim(); update();
+
+</script>
+</body>
+</html>
